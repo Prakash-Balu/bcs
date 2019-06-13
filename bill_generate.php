@@ -7,22 +7,22 @@ if(isset($_SESSION["cellu_id"]))
 }
 else
 {
-	
-	header("location:index.php");
+    
+    header("location:index.php");
 }
 ?>
 <?php include "header.php"; ?>
 <?php
-			include "db.php";
-			
-			$sqlDept="SELECT `comp_igst`,`comp_cgst`,`comp_sgst` FROM `tbl_setting`";
-			$rstDept=mysql_query($sqlDept);
-			$res=mysql_fetch_array($rstDept);
-			
-			    $cgst=$res["comp_cgst"];
-				$sgst=$res["comp_sgst"];
-				$igst=$res["comp_igst"];
-			?>
+            include "db.php";
+            
+            $sqlDept="SELECT `comp_igst`,`comp_cgst`,`comp_sgst` FROM `tbl_setting`";
+            $rstDept=mysql_query($sqlDept);
+            $res=mysql_fetch_array($rstDept);
+            
+                $cgst=$res["comp_cgst"];
+                $sgst=$res["comp_sgst"];
+                $igst=$res["comp_igst"];
+            ?>
 <script src="js/jquery.min.js"></script>
 <script type="text/javascript">
 //total price calculation 
@@ -181,7 +181,7 @@ $(document).on('change keyup blur', '.feestext', function() {
 });
 
 function addPrductDtl() {
-	empty = 0;
+    empty = 0;
 
     var i = $('.listtbl tr').length - 4;
     $('.feestext').each(function() {
@@ -212,23 +212,20 @@ function IsNumeric(e) {
 }
 </script>
 <script>
-    function sum() {
-    totalItems = ($('.listtbl tr').length - 4);console.log(totalItems);
-    for(i = 1; i <= totalItems; i++){
-      var v1 = parseFloat($('#price_'+i).val());
-      var v2 = parseFloat($('#qty_'+i).val());
-      total = v1 * v2;
-      if(isNaN(total)){
-        total = 0;
-      }
-      $('#feeamount_'+i).val(total);
-	  calculateTotal();
+function sum() {
+    totalItems = ($('.listtbl tr').length - 4);
+    console.log(totalItems);
+    for (i = 1; i <= totalItems; i++) {
+        var v1 = parseFloat($('#price_' + i).val());
+        var v2 = parseFloat($('#qty_' + i).val());
+        total = v1 * v2;
+        if (isNaN(total)) {
+            total = 0;
+        }
+        $('#feeamount_' + i).val(total);
+        calculateTotal();
     }
-   }
-
-   
-   
-
+}
 </script>
 <link rel="stylesheet" href="mydatepicker/themes/base/jquery.ui.all.css">
 <script src="mydatepicker/jquery-1.10.2.js"></script>
@@ -236,29 +233,25 @@ function IsNumeric(e) {
 <script src="mydatepicker/ui/jquery.ui.widget.js"></script>
 <script src="mydatepicker/ui/jquery.ui.datepicker.js"></script>
 <script>
-    $(function() 
-{
-	$("#date1,#date2").datepicker
-	({
-		/*minDate: -20, maxDate: "+1M +10D",*/
-		maxDate: "D",
-		dateFormat: "dd-mm-yy",
-		changeMonth: true,
-		changeYear: true,
-		beforeShow: function (input, inst) 
-		{
-			setTimeout(function () 
-			{
-				//inst.dpDiv.css
-//					({
-//						top: 250,
-//						left: 880
-//					});
-			}, 0);
-		}
-		
-	});
-	
+$(function() {
+    $("#date1,#date2").datepicker({
+        /*minDate: -20, maxDate: "+1M +10D",*/
+        maxDate: "D",
+        dateFormat: "dd-mm-yy",
+        changeMonth: true,
+        changeYear: true,
+        beforeShow: function(input, inst) {
+            setTimeout(function() {
+                //inst.dpDiv.css
+                //                  ({
+                //                      top: 250,
+                //                      left: 880
+                //                  });
+            }, 0);
+        }
+
+    });
+
 });
 </script>
 <!--START CONTENT  -->
@@ -270,107 +263,105 @@ function IsNumeric(e) {
         <p style="font-size:20px; font-family:'Trebuchet MS';">Bill Generate</p>
         <p id="error" style="font-size:14px; font-family:'Trebuchet MS'; color:#F00; height:5px;">
             <?php
-				
-				if(isset($_GET["status"]))
-	{
-		$status=$_GET["status"];
-		if($status==1)
-		{
-			print "Inserted successfully....!";
-		}
-		if($status==2)
-		{
-			print "Insert failed...!";
-		}
+                
+                if(isset($_GET["status"]))
+    {
+        $status=$_GET["status"];
+        if($status==1)
+        {
+            print "Inserted successfully....!";
+        }
+        if($status==2)
+        {
+            print "Insert failed...!";
+        }
         if($status==3)
         {
             print "Updated successfully....!";
         }
-	
-		
-	}
-			if( empty($_GET["sid"])) {
-				$select="Select * from auto_id";
-				$exe=mysql_query($select);
-				$res=mysql_fetch_array($exe);
-				$invoice=$res["auto_invoice"];
-				$auto_invoice="BCS".$res["auto_invoice"];
-			} else {
-				$invoice = $_GET["sid"];
-				$auto_invoice=$invoice;
-				$sqlSubject="SELECT * FROM `tbl_invoice` WHERE `iv_ivno`='$invoice'";
-				//print $sqlSubject; 
-				$rstSubject=mysql_query($sqlSubject);
-				$rowcount= mysql_num_rows($rstSubject);
-
-				//echo "<pre>"; print_r($rowcount); exit;
-				if($rowcount>0) {
-					$iv_prdtl =array();
-					$total_amt = 0;
-					for($i=1;$i<=$rowcount;$i++)
-					{
-						$res=mysql_fetch_array($rstSubject);
-						//echo "<pre>"; print_r($res);
-						$iv_date = $res['iv_ivdate'];
-						$iv_ordno = $res['iv_ordno'];
-						$iv_orddate = $res['iv_orddate'];
-						$iv_buydet = $res['iv_buydet'];
-						$iv_tod = $res['iv_tod'];
-						$iv_other = empty($res['iv_sgst']) ? 'yes':'no';
-						$iv_prdtl[] = array("p_name"=>$res['iv_prdname'],"p_price"=>$res['iv_prdprice'], "p_qty"=>$res['iv_prdqty'],"p_amt"=>$res['iv_prdamount']);
-						$total_amt = $total_amt + $res['iv_prdamount'];
-					}
-				}
-			}	
-		?>
-		<script type="text/javascript">
-			//Edit Functionality
-   window.addEventListener('DOMContentLoaded', (event) => {
-    var rowCnt = <?php print $rowcount; ?>;
-   console.log(rowCnt);
-   if(rowCnt>0  ) {
-   	document.getElementById("date1").value = "<?php echo $iv_date; ?>";
-   	document.getElementById("txt_ordno").value = "<?php echo $iv_ordno; ?>";
-   	document.getElementById("date2").value = "<?php echo $iv_orddate; ?>";
-   	document.getElementById("buyer_Address").value = <?php echo json_encode($iv_buydet); ?>;
-   	document.getElementById("term_delivery").value = "<?php echo $iv_tod; ?>";
-   	document.getElementById("term_delivery").value = "<?php echo $iv_tod; ?>";
-   	var otherState = "<?php echo $iv_other; ?>";
-	otherStateEnable(otherState);
-   	if(otherState == 'yes') {
-		document.getElementById("oth_yes").checked = true;
-		document.getElementById("oth_no").checked = false;
-   	} else {
-		document.getElementById("oth_yes").checked = false;
-		document.getElementById("oth_no").checked = true;
-   	}
-
-   	var prdDtl = <?php echo json_encode($iv_prdtl); ?>;
-
-    if(prdDtl) {
-    	var j=1;
-    	for (i = 0; i < prdDtl.length; i++) { 
-      		console.log(prdDtl[i])
-      		var pno ="product_"+j;
-      		var priceno ="price_"+j;
-      		var qtyno ="qty_"+j;
-      		var feeno ="feeamount_"+j;
-      		var pname=prdDtl[i].p_name;
-      		var pprice = prdDtl[i].p_price;
-      		var pqty = prdDtl[i].p_qty;
-      		var pamt = prdDtl[i].p_amt;
-      		document.getElementById(pno).value = pname;
-      		document.getElementById(priceno).value = pprice;
-      		document.getElementById(qtyno).value = pqty;
-      		document.getElementById(feeno).value = pamt;
-      		j++;
-      		addPrductDtl();
-    	}
-        sum();
     }
-   }
-});
-		</script>
+            if( empty($_GET["sid"])) {
+                $select="Select * from auto_id";
+                $exe=mysql_query($select);
+                $res=mysql_fetch_array($exe);
+                $invoice=$res["auto_invoice"];
+                $auto_invoice="BCS".$res["auto_invoice"];
+            } else {
+                $invoice = $_GET["sid"];
+                $auto_invoice=$invoice;
+                $sqlSubject="SELECT * FROM `tbl_invoice` WHERE `iv_ivno`='$invoice'";
+                //print $sqlSubject; 
+                $rstSubject=mysql_query($sqlSubject);
+                $rowcount= mysql_num_rows($rstSubject);
+
+                //echo "<pre>"; print_r($rowcount); exit;
+                if($rowcount>0) {
+                    $iv_prdtl =array();
+                    $total_amt = 0;
+                    for($i=1;$i<=$rowcount;$i++)
+                    {
+                        $res=mysql_fetch_array($rstSubject);
+                        //echo "<pre>"; print_r($res);
+                        $iv_date = $res['iv_ivdate'];
+                        $iv_ordno = $res['iv_ordno'];
+                        $iv_orddate = $res['iv_orddate'];
+                        $iv_buydet = $res['iv_buydet'];
+                        $iv_tod = $res['iv_tod'];
+                        $iv_other = empty($res['iv_sgst']) ? 'yes':'no';
+                        $iv_prdtl[] = array("p_name"=>$res['iv_prdname'],"p_price"=>$res['iv_prdprice'], "p_qty"=>$res['iv_prdqty'],"p_amt"=>$res['iv_prdamount']);
+                        $total_amt = $total_amt + $res['iv_prdamount'];
+                    }
+                }
+            }   
+        ?>
+            <script type="text/javascript">
+            //Edit Functionality
+            window.addEventListener('DOMContentLoaded', (event) => {
+                var rowCnt = <?php print $rowcount; ?>;
+                console.log(rowCnt);
+                if (rowCnt > 0) {
+                    document.getElementById("date1").value = "<?php echo $iv_date; ?>";
+                    document.getElementById("txt_ordno").value = "<?php echo $iv_ordno; ?>";
+                    document.getElementById("date2").value = "<?php echo $iv_orddate; ?>";
+                    document.getElementById("buyer_Address").value = <?php echo json_encode($iv_buydet); ?>;
+                    document.getElementById("term_delivery").value = "<?php echo $iv_tod; ?>";
+                    document.getElementById("term_delivery").value = "<?php echo $iv_tod; ?>";
+                    var otherState = "<?php echo $iv_other; ?>";
+                    otherStateEnable(otherState);
+                    if (otherState == 'yes') {
+                        document.getElementById("oth_yes").checked = true;
+                        document.getElementById("oth_no").checked = false;
+                    } else {
+                        document.getElementById("oth_yes").checked = false;
+                        document.getElementById("oth_no").checked = true;
+                    }
+
+                    var prdDtl = <?php echo json_encode($iv_prdtl); ?>;
+
+                    if (prdDtl) {
+                        var j = 1;
+                        for (i = 0; i < prdDtl.length; i++) {
+                            console.log(prdDtl[i])
+                            var pno = "product_" + j;
+                            var priceno = "price_" + j;
+                            var qtyno = "qty_" + j;
+                            var feeno = "feeamount_" + j;
+                            var pname = prdDtl[i].p_name;
+                            var pprice = prdDtl[i].p_price;
+                            var pqty = prdDtl[i].p_qty;
+                            var pamt = prdDtl[i].p_amt;
+                            document.getElementById(pno).value = pname;
+                            document.getElementById(priceno).value = pprice;
+                            document.getElementById(qtyno).value = pqty;
+                            document.getElementById(feeno).value = pamt;
+                            j++;
+                            addPrductDtl();
+                        }
+                        sum();
+                    }
+                }
+            });
+            </script>
         </p>
         <div style="min-height:350px;">
             <form id="frm" name="frm" action="bill_generate_save.php" method="post">

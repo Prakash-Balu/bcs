@@ -38,7 +38,7 @@ if($login_type=='A')
           <ul>
             <li><a href="quotation_generate.php">Quotation Generate</a></li>
             <li><a href="quotation_print.php">Quotation Print</a></li>
-            <li><a href="quotation_report.php">Quotation Report</a></li>
+            <!-- <li><a href="quotation_report.php">Quotation Report</a></li> -->
           </ul>
         </li>
       <li><a href="settings.php">Settings</a>
