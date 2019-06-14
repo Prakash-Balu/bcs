@@ -19,6 +19,7 @@ $txt_desti = $_POST["txt_desti"];
 $buyer_Address = $_POST["buyer_Address"];
 $term_delivery = $_POST["term_delivery"];
 $product = $_POST["product"];
+$hsn = $_POST["hsn"];
 $price = $_POST["price"];
 $qty = $_POST["qty"];
 $feeamount = $_POST["feeamount"];
@@ -52,6 +53,7 @@ foreach($product as $prdid=>$prd)
 		
 		$prdna=$prd;
 		$price1=$price[$prdid];
+		$hsn1=$hsn[$prdid];
 		$qty1=$qty[$prdid];
 		$feeamount1=$feeamount[$prdid];
 		//print $prdna."**".$price1."**".$qty1."**".$feeamount1.'<br>';
@@ -65,7 +67,7 @@ if( $other_state == 'yes' ) {
 	$txt_sgst = '';
 }
 
-$Insertquery = "INSERT INTO tbl_invoice(`iv_ivno`,`iv_ivdate`,`iv_ordno`,`iv_orddate`,`iv_buydet`,`iv_tod`,`iv_prdname`,`iv_prdprice`,`iv_prdqty`,`iv_prdamount`,`iv_tot`,`iv_cgst`,`iv_cgstv`,`iv_sgst`,`iv_sgstv`,`iv_grdtot`,`iv_aiw`,`iv_crtid`,`iv_crtdate`)VALUES('$txt_ivno','$date1','$txt_ordno','$date2','$buyer_Address','$term_delivery','$prdna','$price1','$qty1','$feeamount1','$totalamount','$cgst','$txt_cgst','$sgst','$txt_sgst','$txt_grdtot','$txt_aiw','$id','$datetime')";
+$Insertquery = "INSERT INTO tbl_invoice(`iv_ivno`,`iv_ivdate`,`iv_ordno`,`iv_orddate`,`iv_buydet`,`iv_tod`,`iv_prdname`,`iv_hsn`,`iv_prdprice`,`iv_prdqty`,`iv_prdamount`,`iv_tot`,`iv_cgst`,`iv_cgstv`,`iv_sgst`,`iv_sgstv`,`iv_grdtot`,`iv_aiw`,`iv_crtid`,`iv_crtdate`)VALUES('$txt_ivno','$date1','$txt_ordno','$date2','$buyer_Address','$term_delivery','$prdna','$hsn1','$price1','$qty1','$feeamount1','$totalamount','$cgst','$txt_cgst','$sgst','$txt_sgst','$txt_grdtot','$txt_aiw','$id','$datetime')";
 
 print $Insertquery;
 

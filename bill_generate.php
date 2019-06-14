@@ -191,6 +191,7 @@ function addPrductDtl() {
     if (empty == 0) {
         html = '<tr id="tr_' + i + '" >';
         html += '<td align="center"><input type="text" name="product[' + i + ']" id="product_' + i + '" class="feestext"  autocomplete="off" autofocus="autofocus"   /></td>';
+        html +='<td align="center"><input type="text" name="hsn[' + i + ']" id="hsn_' + i + '" autocomplete="off" autofocus="autofocus" /></td>'
         html += '<td align="center"><input type="text" name="price[' + i + ']" id="price_' + i + '" autocomplete="off" onkeyup="sum();"  ;"  /></td>';
         html += '<td align="center"><input type="text" name="qty[' + i + ']" id="qty_' + i + '" autocomplete="off" onkeyup="sum();" /></td>';
         html += '<td align="center"><input type="text" name="feeamount[' + i + ']" id="feeamount_' + i + '" autocomplete="off"  onKeyPress="return IsNumeric(event);"  class="totalLinePrice"  /></td>';
@@ -308,7 +309,7 @@ $(function() {
                         $iv_buydet = $res['iv_buydet'];
                         $iv_tod = $res['iv_tod'];
                         $iv_other = empty($res['iv_sgst']) ? 'yes':'no';
-                        $iv_prdtl[] = array("p_name"=>$res['iv_prdname'],"p_price"=>$res['iv_prdprice'], "p_qty"=>$res['iv_prdqty'],"p_amt"=>$res['iv_prdamount']);
+                        $iv_prdtl[] = array("p_name"=>$res['iv_prdname'],"p_hsn"=>$res['iv_hsn'], "p_price"=>$res['iv_prdprice'], "p_qty"=>$res['iv_prdqty'],"p_amt"=>$res['iv_prdamount']);
                         $total_amt = $total_amt + $res['iv_prdamount'];
                     }
                 }
@@ -343,14 +344,18 @@ $(function() {
                         for (i = 0; i < prdDtl.length; i++) {
                             console.log(prdDtl[i])
                             var pno = "product_" + j;
+                            var hsn = "hsn_" + j;
                             var priceno = "price_" + j;
                             var qtyno = "qty_" + j;
                             var feeno = "feeamount_" + j;
                             var pname = prdDtl[i].p_name;
+                            var phsn = prdDtl[i].p_hsn;
                             var pprice = prdDtl[i].p_price;
                             var pqty = prdDtl[i].p_qty;
                             var pamt = prdDtl[i].p_amt;
+                           
                             document.getElementById(pno).value = pname;
+                            document.getElementById(hsn).value = phsn;
                             document.getElementById(priceno).value = pprice;
                             document.getElementById(qtyno).value = pqty;
                             document.getElementById(feeno).value = pamt;
@@ -394,12 +399,14 @@ $(function() {
                     </tr>
                     <tr>
                         <th width="25%" align="center" scope="col">Product Name</th>
-                        <th width="25%" align="center" scope="col">Price</th>
-                        <th width="25%" align="center" scope="col">Quantity</th>
-                        <th width="25%" align="center" scope="col">Amount</th>
+                        <th width="20%" align="center" scope="col">HSN/SAC</th>
+                        <th width="20%" align="center" scope="col">Price</th>
+                        <th width="20%" align="center" scope="col">Quantity</th>
+                        <th width="20%" align="center" scope="col">Amount</th>
                     </tr>
                     <tr id="tr_1">
                         <td align="center"><input type="text" name="product[1]" id="product_1" class="feestext" autocomplete="off" autofocus="autofocus" /></td>
+                        <td align="center"><input type="text" name="hsn[1]" id="hsn_1" autocomplete="off" autofocus="autofocus" /></td>
                         <td align="center"><input type="text" name="price[1]" id="price_1" onkeyup="sum();" autocomplete="off" onKeyPress="return IsNumeric(event);" /></td>
                         <td align="center"><input type="text" name="qty[1]" id="qty_1" onkeyup="sum();" autocomplete="off" onKeyPress="return IsNumeric(event);" /></td>
                         <td align="center"><input type="text" name="feeamount[1]" id="feeamount_1" autocomplete="off" onKeyPress="return IsNumeric(event);" class="totalLinePrice" /></td>
