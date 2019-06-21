@@ -58,6 +58,7 @@ include "db.php";
 				$iv_sgstv=$res["iv_sgstv"];
 				$iv_grdtot=$res["iv_grdtot"];
 				$iv_aiw=$res["iv_aiw"];
+        $iv_hsn=$res["iv_hsn"];
 				}
 				?>
 <?php
@@ -125,6 +126,7 @@ for($i=1;$i<=$rowcount;$i++)
 				{
 		$datainv=mysql_fetch_array($resinv);
 		$name=$datainv['iv_prdname'];
+    $hsn=$datainv['iv_hsn'];
 		$price=$datainv['iv_prdprice'];
 		$qty=$datainv['iv_prdqty'];
 		$amount=$datainv['iv_prdamount'];
@@ -134,7 +136,7 @@ for($i=1;$i<=$rowcount;$i++)
   <tr class="hide_top">
     <td align="center"><?php print $i;  ?></td>
     <td style="padding-left:15px;" ><?php print $name;  ?></td>
-    <td align="center"></td>
+    <td align="center"><?php print $hsn;  ?></td>
     <td align="center"><?php print $qty;  ?></td>
     <td align="center"><?php print $price;  ?></td>
     <td align="center"><?php print $amount;  ?></td>
