@@ -19,8 +19,10 @@ if(mysql_query($sql))
 {
 	//$status = 4; 
 	//$invoice=$hdn_invoice +1;
-//		$sql="UPDATE `auto_id` SET `auto_invoice` ='$invoice' WHERE `auto_invoice`='$hdn_invoice'";
-//		$rst=mysql_query($sql);
+	$autoInvoice = str_replace("BCS","", $invoice);
+	$hdn_invoice = $autoInvoice + 1;
+	$sql="UPDATE `auto_id` SET `auto_invoice` ='$autoInvoice'  WHERE `auto_invoice`='$hdn_invoice'";
+	$rst=mysql_query($sql);
 }
 else
 {

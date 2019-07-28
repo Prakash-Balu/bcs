@@ -52,6 +52,7 @@ else
           <th width="18%" align="center" scope="col">Buyer's Details</th>
           <th width="14%" align="center" scope="col">Other State</th>
           <th width="14%" align="center" scope="col">Invoice No</th>  
+          <th width="14%" align="center" scope="col">Invoice Date</th>
           <th width="12%" align="center" scope="col">Order No</th>  
           <th width="11%" align="center" scope="col">Order Date</th>    
            <th width="12%" align="center" scope="col">Grand Total</th>
@@ -63,7 +64,7 @@ else
         <?php
 			include "db.php";
 			
-			$sqlSubject="SELECT * FROM `tbl_invoice`  GROUP BY `iv_ivno` ORDER BY `iv_id` DESC";
+			$sqlSubject="SELECT * FROM `tbl_invoice`  GROUP BY `iv_ivno`,`iv_ivdate` ORDER BY `iv_ivno` DESC";
 			//print $sqlSubject; 
 			$rstSubject=mysql_query($sqlSubject);
 			$rowcount= mysql_num_rows($rstSubject);
@@ -81,13 +82,17 @@ else
 				{	
 //`iv_ivno``iv_ivdate``iv_ordno``iv_orddate``iv_buydet` iv_grdtot
 				$res=mysql_fetch_array($rstSubject);
-        // echo "<pre>"; print_r($res); exit;
 				$iv_buydet=$res["iv_buydet"];
 				$iv_ivno=$res["iv_ivno"];
+				$iv_ivdate=$res["iv_ivdate"];
 				$iv_ordno=$res["iv_ordno"];
 				$iv_orddate=$res["iv_orddate"];
 				$iv_grdtot=$res["iv_grdtot"];
-        $iv_sgst = $res["iv_sgst"];
+        		$iv_sgst = $res["iv_sgst"];
+				$delete_flag = false;
+		        if($i == 1) {
+		        	$delete_flag = true;
+		        }
 				
 				?>
         <tr <?php if(($i%2)==0){ ?> class="alternate" <?php } ?>>
@@ -95,11 +100,14 @@ else
           <td align="center"><?php print $iv_buydet; ?></td>
           <td align="center"><?php print !empty($iv_sgst) ? 'No' : 'Yes'; ?></td>
           <td align="center"><?php print $iv_ivno; ?></td>
+          <td align="center"><?php print $iv_ivdate; ?></td>
           <td align="center"><?php print $iv_ordno; ?></td>
           <td align="center"><?php print $iv_orddate; ?></td>
           <td align="center"><?php print $iv_grdtot; ?></td>
           <td align="center"><a href="bill_generate.php?sid=<?php print $iv_ivno; ?>" title="Edit">Edit</a>
-          <a href="bill_delete.php?sid=<?php print $iv_ivno; ?>" title="Delete">Delete</a></td>
+          <?php if($delete_flag) {?>
+          	<a href="bill_delete.php?sid=<?php print $iv_ivno; ?>" title="Delete">Delete</a></td>
+      	  <?php }?>
           <td align="center"><a href="bill_company_print.php?sid=<?php print $iv_ivno; ?>&prType=company" title="Print" target="_blank">Print</a></td>
           <td align="center"><a href="bill_company_print.php?sid=<?php print $iv_ivno; ?>&prType=buyer" title="Print" target="_blank">Print</a></td>
           <td align="center"><a href="bill_company_print.php?sid=<?php print $iv_ivno; ?>&prType=transport" title="Print" target="_blank">Print</a></td>
