@@ -33,7 +33,19 @@
 				if($status=="3")
 				{
 					echo "Logout successfully...!";
-				}  
+				}
+				if($status=="4")
+				{
+					echo "Updated Password successfully...!";
+				}
+				if($status=="5")
+				{
+					echo "Password mismatch...!";
+				}
+				if($status=="6")
+				{
+					echo "Update password failed...!";
+				}
 				
 			}
 			?></div>
@@ -50,6 +62,7 @@
       <p class="submit">
         <input type="submit" name="commit" value="Login" style="cursor:pointer">
       </p>
+      <a href="forgotpwd.php" class="btn btn-link">Forgot Your Password?</a>
     </form>
   </div>
 </section>
