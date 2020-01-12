@@ -93,7 +93,7 @@ else
         $iv_grdtot=$res["iv_grdtot"];
             $iv_sgst = $res["iv_sgst"];
         $delete_flag = false;
-            if($i == 1) {
+            if($i == 1 && (!isset($_GET['page']) || $_GET['page'] == 1)) {
               $delete_flag = true;
             }
         
@@ -126,8 +126,9 @@ else
                     </td>
                     <td align="center"><a href="bill_generate.php?sid=<?php print $iv_ivno; ?>" title="Edit">Edit</a>
                         <?php if($delete_flag) {?>
-                        <a href="bill_delete.php?sid=<?php print $iv_ivno; ?>" title="Delete">Delete</a></td>
+                        <a href="bill_delete.php?sid=<?php print $iv_ivno; ?>" title="Delete">Delete</a>
                     <?php }?>
+                    </td>
                     <td align="center"><a href="bill_company_print.php?sid=<?php print $iv_ivno; ?>&prType=company" title="Print" target="_blank">Print</a></td>
                     <td align="center"><a href="bill_company_print.php?sid=<?php print $iv_ivno; ?>&prType=buyer" title="Print" target="_blank">Print</a></td>
                     <td align="center"><a href="bill_company_print.php?sid=<?php print $iv_ivno; ?>&prType=transport" title="Print" target="_blank">Print</a></td>

@@ -165,6 +165,16 @@ for($i=1;$i<=$rowcount;$i++)
     <td align="center"><strong><?php print $qt_grdtot;  ?></strong></td>
   </tr>
 </table>
+<div style="margin-top: 6px;position: absolute; width:100%">
+  <div style="margin-left: 67%;">
+    <p><strong>Company Bank Details</strong></p>
+  </div>
+  <div style="margin-left: 65%;">
+    <p><strong>Bank Name:</strong>CITY UNION BANK</p>
+    <p><strong>A/C No:</strong>510909010104647</p>
+    <p>Branch & IFSC Code:</strong>CIUB0000510</p>
+  </div>
+</div>
 <table style="margin-top:340px;" width="100%" border="0">
  <tr class="noBorder">
     <td height="44" colspan="4"></td>

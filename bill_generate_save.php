@@ -50,7 +50,7 @@ if( $rowcount > 0 ) {
 $i=1;
 foreach($product as $prdid=>$prd)
 	{
-		
+		if($prd!='' && $price[$prdid]!='' && $hsn[$prdid] && $qty[$prdid]!='' && $feeamount[$prdid]!=0 ) {
 		$prdna=$prd;
 		$price1=$price[$prdid];
 		$hsn1=$hsn[$prdid];
@@ -85,7 +85,8 @@ else
 $status=2;	
 	
 	}
-	}
+}
+}
 	
 	
 	$invoice=$hdn_invoice +1;
